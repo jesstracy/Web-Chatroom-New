@@ -14,10 +14,10 @@ public class ChatDatabase {
 	Connection conn;
 	public final static String DB_URL = "jdbc:h2:./main";
 
-	public static void main(String[] args) throws SQLException{
-		ChatDatabase myDatabase = new ChatDatabase();
-		myDatabase.init();
-	}
+//	public static void main(String[] args) throws SQLException{
+//		ChatDatabase myDatabase = new ChatDatabase();
+//		myDatabase.init();
+//	}
 
 	public void init() throws SQLException {
 		Server.createWebServer().start();

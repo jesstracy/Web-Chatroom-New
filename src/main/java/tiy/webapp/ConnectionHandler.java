@@ -20,7 +20,7 @@ public class ConnectionHandler implements Runnable {
 
     public ConnectionHandler (Socket incomingConnection, ChatDatabase myDatabase) {
         this.connection = incomingConnection;
-        this.messageHistory = messageHistory;
+//        this.messageHistory = messageHistory;
         this.myDatabase = myDatabase;
     }
 

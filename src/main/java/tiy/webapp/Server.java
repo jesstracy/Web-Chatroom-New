@@ -6,6 +6,7 @@ package tiy.webapp;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,10 +17,21 @@ public class Server {
     ChatDatabase myDatabase = new ChatDatabase();
 
     public static void main(String[] args) {
-        System.out.println("Running...");
-
         Server myServer = new Server();
-        myServer.startServer();
+        myServer.kickThingsOff();
+    }
+
+    public void kickThingsOff() {
+        try {
+            System.out.println("Running...");
+
+//            ChatDatabase myDatabase = new ChatDatabase();
+            myDatabase.init();
+
+            startServer();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     Socket connection = null;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 @Controller
 public class ChatSpringAppController {
-//        Client myClient = new Client();
+    Client myClient = new Client();
     String username = "";
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
@@ -23,9 +23,10 @@ public class ChatSpringAppController {
     }
 
     @RequestMapping(path = "/get_username", method = RequestMethod.POST)
-    public String get_username(String username) {
-        this.username = username;
-        System.out.println(this.username);
+    public String get_username(HttpSession session, String username) {
+//        this.username = username;
+        session.setAttribute("username", username);
+//        System.out.println(this.username);
         return "redirect:/chat";
     }
 
@@ -33,9 +34,9 @@ public class ChatSpringAppController {
     @RequestMapping(path = "/chat", method = RequestMethod.GET)
     public String input(HttpSession session, Model model, String message) {
         if (message != null) {
-//        String serverResponse = myClient.sendMessage(session.getAttribute("username"), message); <-- returns string, entire history, newest message on top
-            System.out.println("Username is: " + session.getAttribute("username"));
-            String serverResponse = "test 1\ntest 2\ntest 3\ntest4";
+        String serverResponse = myClient.sendMessage((String)session.getAttribute("username"), message);
+//            System.out.println("Username is: " + session.getAttribute("username"));
+//            String serverResponse = "test 1\ntest 2\ntest 3\ntest4";
             String[] serverMessages = serverResponse.split("\n");
             model.addAttribute("serverMessages", serverMessages);
         }
