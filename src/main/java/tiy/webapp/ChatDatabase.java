@@ -1,5 +1,6 @@
 package tiy.webapp;
 
+import com.sun.tools.corba.se.idl.PragmaEntry;
 import org.h2.tools.Server;
 
 import java.sql.*;
@@ -21,35 +22,34 @@ public class ChatDatabase {
 		Server.createWebServer().start();
 		Connection conn = DriverManager.getConnection(DB_URL);
 		Statement stmt = conn.createStatement();
-		stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, fullname VARCHAR, username VARCHAR)");
-		stmt.execute("CREATE TABLE IF NOT EXISTS messages (id IDENTITY, message VARCHAR, user_id INT)");
+//		stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, fullname VARCHAR, username VARCHAR)");
+		stmt.execute("CREATE TABLE IF NOT EXISTS messages (id IDENTITY, message VARCHAR)");
 
 	}
 
-	public int insertUser(Connection conn, String fullName, String userName) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?, ?)");
-		stmt.setString(1, fullName);
-		stmt.setString(2, userName);
-		stmt.execute();
+//	public int insertUser(Connection conn, String fullName, String userName) throws SQLException {
+//		PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?, ?)");
+//		stmt.setString(1, fullName);
+//		stmt.setString(2, userName);
+//		stmt.execute();
+//
+//		stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+//		stmt.setString(1, userName);
+//		ResultSet result = stmt.executeQuery();
+//		result.next();
+//
+//		return result.getInt("id");
+//	}
 
-		stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
-		stmt.setString(1, userName);
-		ResultSet result = stmt.executeQuery();
-		result.next();
+//	public void deleteUser(Connection conn, String userName) throws SQLException {
+//		PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE username = ?");
+//		stmt.setString(1, userName);
+//		stmt.execute();
+//	}
 
-		return result.getInt("id");
-	}
-
-	public void deleteUser(Connection conn, String userName) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE username = ?");
-		stmt.setString(1, userName);
-		stmt.execute();
-	}
-
-	public void postMessage (Connection conn, String message, int userID) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO messages VALUES (NULL, ?, ?)");
+	public void postMessage (Connection conn, String message) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("INSERT INTO messages VALUES (NULL, ?)");
 		stmt.setString(1, message);
-		stmt.setInt(2, userID);
 		stmt.execute();
 	}
 
@@ -71,6 +71,5 @@ public class ChatDatabase {
 
 		return messageHistory;
 	}
-
 
 }

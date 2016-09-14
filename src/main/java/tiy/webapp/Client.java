@@ -19,18 +19,18 @@ public class Client {
     BufferedReader in = null;
 
 
-    public String sendMessage(String message){
+    public String sendMessage(String userName, String message){
         String serverResponse = null;
         ArrayList<String> messageHistory = null;
         try {
             Socket clientSocket = new Socket(HOST_ADDRESS, PORT_NUMBER);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out.println(message);
+            out.println(userName + ": " + message);
             //get initial response
             serverResponse = in.readLine();
 
-            //loop to accept the entire chat histry into a String Arraylist
+            //loop to accept the entire chat history into a String Arraylist
             messageHistory = new ArrayList<String>();
             while (!serverResponse.equalsIgnoreCase("end:history")){
                 messageHistory.add(serverResponse);
