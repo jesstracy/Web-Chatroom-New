@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Chat App</title>
 </head>
-<body>
+<body style="background-color:salmon">
 
 
     <div style="margin:5px">
@@ -14,13 +14,13 @@
         </form>
     </div>
 
-    <div style="border:2px solid black; padding:5px">
-        {{#serverMessages}}
-                <br>{{.}}</br>
-        {{/serverMessages}}
     </div>
 
-
+    {{#serverMessages}}
+        <div style="border:2px solid white; border-radius:70%; padding:5px; background-color:gray; color:white; text-align: center;">
+            <br>{{.}}</br>
+        </div>
+    {{/serverMessages}}
 
 </body>
 </html>
