@@ -44,9 +44,11 @@ public class ConnectionHandler implements Runnable {
         PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream(), true);
 
         String inputLine = inputFromClient.readLine();
-        myDatabase.postMessage(myDatabase.conn, inputLine);
-        messageHistory = myDatabase.chatHistory(myDatabase.conn);
+        if (!inputLine.equals("return:history")) {
+            myDatabase.postMessage(myDatabase.conn, inputLine);
+        }
 
+        messageHistory = myDatabase.chatHistory(myDatabase.conn);
         for (String currentString : messageHistory) {
             outputToClient.println(currentString);
         }
