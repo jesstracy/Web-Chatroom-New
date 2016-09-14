@@ -7,13 +7,18 @@
 <body>
 
 
+    <div style="margin:5px">
+        <form action="/chat" method="get">
+            <input type="text" placeholder="Enter your message" name="message"/>
+            <button type="submit">Send</button>
+        </form>
+    </div>
 
-    <form action="/chat" method="get">
-        <input type="text" placeholder="Enter your message" name="message"/>
-        <button type="submit">Send!</button>
-    </form>
-
-
+    <div style="border:2px solid black; padding:5px">
+        {{#serverMessages}}
+                <br>{{.}}</br>
+        {{/serverMessages}}
+    </div>
 
 
 
