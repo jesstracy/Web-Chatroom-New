@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -15,10 +16,12 @@ public class ConnectionHandler implements Runnable {
 
     Socket connection = null;
     ArrayList<String> messageHistory;
+    ChatDatabase myDatabase;
 
-    public ConnectionHandler (Socket incomingConnection) {
+    public ConnectionHandler (Socket incomingConnection, ChatDatabase myDatabase) {
         this.connection = incomingConnection;
         this.messageHistory = messageHistory;
+        this.myDatabase = myDatabase;
     }
 
     public ConnectionHandler () {
@@ -27,13 +30,12 @@ public class ConnectionHandler implements Runnable {
     public void run() {
         try {
             handleIncomingConnection(connection);
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
-    public void handleIncomingConnection (Socket clientSocket) throws IOException {
+    public void handleIncomingConnection (Socket clientSocket) throws Exception {
         System.out.println("Connection accepted");
 
         // this is how we read from the client
@@ -42,14 +44,12 @@ public class ConnectionHandler implements Runnable {
         PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream(), true);
 
         String inputLine = inputFromClient.readLine();
-        System.out.println(inputLine);
-        outputToClient.println(inputLine);
+        myDatabase.postMessage(myDatabase.conn, inputLine);
+        messageHistory = myDatabase.chatHistory(myDatabase.conn);
 
-        System.out.println(inputLine);
-
-        outputToClient.println("Echo:" + inputLine);
-//        }
-
+        for (String currentString : messageHistory) {
+            outputToClient.println(currentString);
+        }
+        outputToClient.println("end:history");
     }
-
 }

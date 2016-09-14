@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class ChatDatabase {
 
+	Connection conn;
 	public final static String DB_URL = "jdbc:h2:./main";
 
 	public static void main(String[] args) throws SQLException{
@@ -20,11 +21,10 @@ public class ChatDatabase {
 
 	public void init() throws SQLException {
 		Server.createWebServer().start();
-		Connection conn = DriverManager.getConnection(DB_URL);
+		conn = DriverManager.getConnection(DB_URL);
 		Statement stmt = conn.createStatement();
 //		stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, fullname VARCHAR, username VARCHAR)");
 		stmt.execute("CREATE TABLE IF NOT EXISTS messages (id IDENTITY, message VARCHAR)");
-
 	}
 
 //	public int insertUser(Connection conn, String fullName, String userName) throws SQLException {
