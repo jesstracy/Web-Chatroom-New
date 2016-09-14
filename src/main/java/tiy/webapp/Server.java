@@ -13,6 +13,8 @@ import java.util.ArrayList;
  */
 public class Server {
 
+    ChatDatabase myDatabase = new ChatDatabase();
+
     public static void main(String[] args) {
         System.out.println("Running...");
 
@@ -33,7 +35,7 @@ public class Server {
 
             while(true) {
                 Socket incConnection = listener.accept();
-                ConnectionHandler handler = new ConnectionHandler(incConnection);
+                ConnectionHandler handler = new ConnectionHandler(incConnection, myDatabase);
                 Thread multiThreadServer = new Thread(handler);
 
                 multiThreadServer.start();
